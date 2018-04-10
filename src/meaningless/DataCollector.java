@@ -163,7 +163,6 @@ public class DataCollector {
     {
         List<TreeMap<Long, Data>> sortTrees = new ArrayList<>();
         List<Deque<Data>> buffers = new ArrayList<>();
-        Set<Long> toBeMatched = new HashSet<Long>();
         // initialize book keeping data structures
         for (int i = 0; i < CLIENT_NUM; i++) {
             buffers.add(new ArrayDeque<Data>());
@@ -173,6 +172,7 @@ public class DataCollector {
         for (int i = 0; i < CLIENT_NUM; i++) {
             final int index = i;
             Thread receiver = new Thread(() -> {
+                Set<Long> toBeMatched = new HashSet<Long>();
                 Deque<Data> stream = buffers.get(index);
                 TreeMap<Long, Data> sortedData = sortTrees.get(index);
                 while (true) {
